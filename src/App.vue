@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import NavBar from './components/NavBar.vue';
+import { useTamagotchiStore } from './stores/tamagotchiStore';
+
+const tamagotchiStore = useTamagotchiStore();
 </script>
 
 <template>
   <h1>Hello App!</h1>
   <p>
     <strong>Current route path:</strong> {{ $route.fullPath }}
+  </p>
+  <p>
+    Tama: {{ tamagotchiStore.mood }}
   </p>
   <NavBar />
   <main>
