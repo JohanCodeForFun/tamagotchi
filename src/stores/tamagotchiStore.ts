@@ -1,10 +1,5 @@
 import { defineStore } from "pinia";
-
-interface TamagotchiState {
-  hunger: number;
-  happiness: number;
-  mood: string;
-}
+import type { TamagotchiType } from "@/types/tamagotchiType";
 
 const mood = {
   happy: '^_^',
@@ -15,7 +10,7 @@ const mood = {
 }
 
 export const useTamagotchiStore = defineStore('tamagotchi', {
-  state: (): TamagotchiState => ({
+  state: (): TamagotchiType => ({
     happiness: 100,
     hunger: 0,
     mood: mood.happy
@@ -26,7 +21,6 @@ export const useTamagotchiStore = defineStore('tamagotchi', {
     },
     play() {
       this.happiness = Math.min(this.happiness + 10, 100);
-
     },
     reset() {
       this.mood = '^_^';
