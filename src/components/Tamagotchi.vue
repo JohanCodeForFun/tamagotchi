@@ -10,7 +10,7 @@
   `-.-'
       </pre>
     </div>
-    <p>Name: {{ name }}</p>
+    <p>Name: {{ props.name }}</p>
     <p>Hunger: {{ tamagotchiState.hunger }}</p>
     <p>Happiness: {{ tamagotchiState.happiness }}</p>
     <button @click="feed">Feed</button>
@@ -24,6 +24,10 @@ import { ref, onMounted, onUnmounted, watch, reactive } from 'vue'
 
 const props = defineProps<{
   name: string;
+}>();
+
+const emit = defineEmits<{
+  (e: 'update', state: TamagotchiState): void;
 }>();
 
 interface TamagotchiState {
@@ -72,6 +76,7 @@ onMounted(() => {
   interval = setInterval(() => {
     tamagotchiState.hunger = Math.min(tamagotchiState.hunger + 1, 100);
     tamagotchiState.happiness = Math.max(tamagotchiState.happiness - 1, 0);
+    emit('update', tamagotchiState);
   }, 500);
 });
 
