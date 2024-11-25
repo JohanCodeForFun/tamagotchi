@@ -1,12 +1,15 @@
 <script setup lang="ts">
-import Tamagotchi from './components/Tamagotchi.vue';
-import TheCounter from './components/TheCounter.vue';
+import NavBar from './components/NavBar.vue';
 </script>
 
 <template>
+  <h1>Hello App!</h1>
+  <p>
+    <strong>Current route path:</strong> {{ $route.fullPath }}
+  </p>
+  <NavBar />
   <main>
-    <TheCounter />
-    <Tamagotchi />
+    <RouterView />
   </main>
 </template>
 

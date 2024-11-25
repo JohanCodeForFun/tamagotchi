@@ -22,6 +22,10 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted, watch, reactive } from 'vue'
 
+const props = defineProps<{
+  name: string;
+}>();
+
 interface TamagotchiState {
   hunger: number;
   happiness: number;
