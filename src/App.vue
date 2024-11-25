@@ -4,7 +4,7 @@ import Tamagotchi from './components/Tamagotchi.vue';
 
 <template>
   <main>
-    <Tamagotchi />
+    <Tamagotchi name="Tama"/>
   </main>
 </template>
 

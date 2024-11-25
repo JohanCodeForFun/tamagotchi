@@ -3,26 +3,26 @@
     <h1>Tamagotchi</h1>
     <div class="turtle-states">
       <pre>
-  .-.-.
-  ( {{}} )
-  (       )
-  (     )
-  `-.-'
+.-.-.
+( {{ tamagotchiState.mood }} )
+(       )
+(     )
+`-.-'
       </pre>
     </div>
-    <p>Name: {{  }}</p>
-    <p>Hunger: {{  }}</p>
-    <p>Happiness: {{  }}</p>
+    <p>Name: {{ props.name }}</p>
+    <p>Hunger: {{ tamagotchiState.hunger }}</p>
+    <p>Happiness: {{ tamagotchiState.happiness }}</p>
     <div>
-      <button>Feed</button>
-      <button>Play</button>
+      <button @click="feed">Feed</button>
+      <button @click="play">Play</button>
     </div>
-    <button>Reset</button>
+    <button @click="reset">Reset</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, watch, reactive } from 'vue'
+import { ref, reactive, onMounted, onUnmounted, watch } from 'vue';
 
 interface TamagotchiState {
   hunger: number;
@@ -36,20 +36,37 @@ const mood = {
   concerned: '(O_O)',
   angry: '(>_<)',
   exhausted: '(x_x)',
-}
+  hungry: '>_<'
+};
 
 // Define reactive variables
-const name = ref<string>('Tama');
-const tamagotchiState = reactive<TamagotchiState>({});
+const props = defineProps<{
+  name: string;
+}>();
+
+const name = ref<string>(props.name);
+const tamagotchiState = reactive<TamagotchiState>({
+  hunger: 0,
+  happiness: 100,
+  mood: mood.happy
+});
 
 // Method to feed Tamagotchi
-const feed = () => {};
+const feed = () => {
+  tamagotchiState.hunger = Math.max(tamagotchiState.hunger - 10, 0);
+};
 
 // Method to play with Tamagotchi
-const play = () => {};
+const play = () => {
+  tamagotchiState.happiness = Math.min(tamagotchiState.happiness + 10, 100);
+};
 
 // Method to reset Tamagotchi
-const reset = () => {};
+const reset = () => {
+  tamagotchiState.hunger = 0;
+  tamagotchiState.happiness = 100;
+  tamagotchiState.mood = mood.happy;
+};
 
 // Lifecycle hooks to simulate the passage of time
 let interval: number;
@@ -73,18 +90,20 @@ watch(
     console.log(hunger, happiness, tamagotchiState);
     
     if (hunger <= 5 && happiness > 90) {
-      tamagotchiState.mood = '^_^';
+      tamagotchiState.mood = mood.happy;
     } else if (hunger > 5 && hunger <= 10 && happiness > 80) {
-      tamagotchiState.mood = 'o_o';
+      tamagotchiState.mood = mood.irritated;
     } else if (hunger > 10 && hunger <= 20 && happiness > 70) {
-      tamagotchiState.mood = '(O_O)';
+      tamagotchiState.mood = mood.concerned;
     } else if (hunger > 20 && happiness > 60) {
-      tamagotchiState.mood = '(>_<)';
+      tamagotchiState.mood = mood.angry;
     } else if (hunger > 30 && happiness > 50) {
-      tamagotchiState.mood = '(x_x)';
-  }
-},
-{ deep: true }
+      tamagotchiState.mood = mood.exhausted;
+    } else if (hunger > 50) {
+      tamagotchiState.mood = mood.hungry;
+    }
+  },
+  { deep: true }
 );
 </script>
 
