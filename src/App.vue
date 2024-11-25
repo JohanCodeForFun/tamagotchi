@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import Tamagotchi from './components/Tamagotchi.vue';
+import TheCounter from './components/TheCounter.vue';
 </script>
 
 <template>
   <main>
+    <TheCounter />
     <Tamagotchi />
   </main>
 </template>
